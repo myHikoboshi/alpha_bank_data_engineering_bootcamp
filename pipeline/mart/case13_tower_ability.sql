@@ -1,0 +1,111 @@
+WITH base AS (
+    SELECT
+        match_id,
+        player_slot,
+        effective_hero_id,
+        hero_name,
+        CASE
+            WHEN hero_roles IS NOT NULL THEN array_join(hero_roles, ', ')
+            ELSE 'unknown'
+        END AS hero_roles_str,
+        CASE
+            WHEN hero_roles IS NOT NULL AND array_join(hero_roles, ',') LIKE '%Pusher%' THEN TRUE
+            ELSE FALSE
+        END AS is_pusher_role,
+        is_radiant,
+        win,
+        duration,
+        duration_bucket,
+        game_mode,
+        game_mode_name,
+        game_mode_group,
+        team_players_count,
+        phase,
+        building_category,
+        tower_type,
+        building_lane,
+        building_side,
+        damage_source_type,
+        CASE
+            WHEN damage_source_type IN ('ability_direct', 'ability_summon', 'summon_without_ability') THEN TRUE
+            ELSE FALSE
+        END AS is_ability_or_summon,
+        ability_id,
+        ability_name,
+        ability_display_name,
+        ability_owner_hero_id,
+        ability_owner_hero_name,
+        fromnpc_name,
+        item_name,
+        COALESCE(ability_display_name, fromnpc_name, item_name, 'Auto Attack') AS source_label,
+        damage,
+        time
+    FROM lakehouse.stage.case13_tower_damage
+    WHERE is_matched_match = TRUE
+      AND player_slot IS NOT NULL
+)
+SELECT
+    match_id,
+    player_slot,
+    effective_hero_id,
+    hero_name,
+    hero_roles_str,
+    is_pusher_role,
+    is_radiant,
+    win,
+    duration,
+    duration_bucket,
+    game_mode,
+    game_mode_name,
+    game_mode_group,
+    team_players_count,
+    phase,
+    building_category,
+    tower_type,
+    building_lane,
+    building_side,
+    damage_source_type,
+    is_ability_or_summon,
+    ability_id,
+    ability_name,
+    ability_display_name,
+    ability_owner_hero_id,
+    ability_owner_hero_name,
+    fromnpc_name,
+    item_name,
+    source_label,
+    COUNT(*) AS events_count,
+    SUM(CAST(damage AS BIGINT)) AS total_damage,
+    MIN(time) AS min_event_time,
+    MAX(time) AS max_event_time
+FROM base
+GROUP BY
+    match_id,
+    player_slot,
+    effective_hero_id,
+    hero_name,
+    hero_roles_str,
+    is_pusher_role,
+    is_radiant,
+    win,
+    duration,
+    duration_bucket,
+    game_mode,
+    game_mode_name,
+    game_mode_group,
+    team_players_count,
+    phase,
+    building_category,
+    tower_type,
+    building_lane,
+    building_side,
+    damage_source_type,
+    is_ability_or_summon,
+    ability_id,
+    ability_name,
+    ability_display_name,
+    ability_owner_hero_id,
+    ability_owner_hero_name,
+    fromnpc_name,
+    item_name,
+    source_label
