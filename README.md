@@ -61,19 +61,19 @@
 
 **Топ 15 способностей и саммонов по башням:**
 
-![top_15_abilities](assets\top_15_abilities.jpg)
+![top_15_abilities](assets/top_15_abilities.jpg)
 
 **Топ 15 героев по нормализованному урону умениями:**
 
-![top_15_heroes](assets\top_15_heroes.jpg) 
+![top_15_heroes](assets/top_15_heroes.jpg) 
 
 **Распределение урона топ способностей по типам башен:**
 
-![dmg_dist](assets\dmg_dist.jpg) 
+![dmg_dist](assets/dmg_dist.jpg) 
 
 **Доля и объем механик по стадиям матча:**
 
-![mechancics_share](assets\mechancics_share.jpg)
+![mechancics_share](assets/case18_graph.pngmechancics_share.jpg)
 
 ### Ключевые особенности данных
 
