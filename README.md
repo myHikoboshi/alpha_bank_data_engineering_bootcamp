@@ -73,7 +73,7 @@
 
 **Доля и объем механик по стадиям матча:**
 
-![mechancics_share](assets/case18_graph.pngmechancics_share.jpg)
+![mechancics_share](assets/mechancics_share.jpg)
 
 ### Ключевые особенности данных
 
